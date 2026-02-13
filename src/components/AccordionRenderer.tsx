@@ -1,16 +1,8 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import AccordionItem from "./AccordionItem";
-import ContentBlock from "../ContentBlock";
-
-export type ItemType = 'accordion' | 'markdown' | 'diagram';
-
-export interface AccordionData {
-  id: string;
-  type?: ItemType;
-  question: string;
-  answer: string;
-}
+import AccordionItem from "./Accordion/AccordionItem";
+import ContentBlock from "./ContentBlock";
+import type { AccordionData } from "../types";
 
 interface Props {
   accordions: AccordionData[];
@@ -19,7 +11,7 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-export default function AccordionContainer({
+export default function AccordionRenderer({
   accordions,
   canEdit,
   onUpdate,
@@ -31,19 +23,19 @@ export default function AccordionContainer({
     <div className="space-y-lg">
       <AnimatePresence>
         {accordions.map((item, index) => {
-           if (item.type === 'markdown' || item.type === 'diagram') {
-             return (
-               <ContentBlock
-                 key={item.id}
-                 data={item}
-                 canEdit={canEdit}
-                 onUpdate={onUpdate}
-                 onDelete={onDelete}
-               />
-             );
-           }
-           
-           return (
+          if (item.type === 'markdown' || item.type === 'diagram') {
+            return (
+              <ContentBlock
+                key={item.id}
+                data={item}
+                canEdit={canEdit}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
+              />
+            );
+          }
+          
+          return (
             <AccordionItem
               key={item.id}
               index={index}

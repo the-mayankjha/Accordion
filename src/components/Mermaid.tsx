@@ -47,13 +47,23 @@ export default function Mermaid({ chart }: Props) {
           .trim();
       }
 
-      mermaid.render(id, cleanedChart).then(({ svg }) => {
-        setSvg(svg);
-      }).catch((error) => {
-        console.error("Mermaid rendering failed:", error);
-        console.log("Failed chart content:", cleanedChart);
-        setSvg(`<div class="text-red-500 font-mono text-sm p-2 border border-red-500/20 rounded bg-red-500/10">Failed to render diagram: ${error.message}</div>`);
-      });
+      try {
+        mermaid.render(id, cleanedChart).then(({ svg }) => {
+          setSvg(svg);
+        }).catch((error) => {
+          console.error("Mermaid rendering failed:", error);
+          setSvg(`<div class="text-red-400 font-mono text-xs p-4 border border-red-500/20 rounded-lg bg-red-500/5 whitespace-pre-wrap">
+  <div class="font-bold mb-1">Diagram Syntax Error</div>
+  ${error.message?.split('\n')[0] || 'Unknown error'}
+</div>`);
+        });
+      } catch (e: any) {
+         console.error("Mermaid synchronous error:", e);
+         setSvg(`<div class="text-red-400 font-mono text-xs p-4 border border-red-500/20 rounded-lg bg-red-500/5">
+  <div class="font-bold mb-1">Diagram Error</div>
+  ${e.message || 'Failed to render diagram'}
+</div>`);
+      }
     }
   }, [chart]);
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import MarkdownRenderer from "./MarkdownRenderer";
 import { preprocessContent } from "../utils/latex";
-import type { AccordionData } from "./Accordion/AccordionContainer";
+import type { AccordionData } from "../types";
 import Mermaid from "./Mermaid";
 
 interface Props {
