@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode */
+    --bg-default: #FFFFFF;
+    --bg-secondary: #FBFBFA;
+    --bg-hover: #F1F1EF;
+    --bg-active: #EFEFEF;
+
+    --text-default: #37352F;
+    --text-secondary: #787774;
+    --text-disabled: #D3D3D3;
+
+    --border-default: #E9E9E7;
+    --border-focus: #2EAADC;
+
+    --accent-gold: #D9730D;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark Mode */
+      --bg-default: #191919;
+      --bg-secondary: #202020;
+      --bg-hover: #2C2C2C;
+      --bg-active: #373737;
+
+      --text-default: #D4D4D4;
+      --text-secondary: #9B9B9B;
+      --text-disabled: #5A5A5A;
+
+      --border-default: #2F2F2F;
+      --border-focus: #2EAADC;
+
+      --accent-gold: #DFAB01;
+    }
+  }
+
+  body {
+    @apply bg-notion-bg text-notion-text antialiased;
+  }
+}
