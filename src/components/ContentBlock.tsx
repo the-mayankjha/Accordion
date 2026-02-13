@@ -1,4 +1,5 @@
 import { useState } from "react";
+import MarkdownEditor from "./MarkdownEditor";
 import MarkdownRenderer from "./MarkdownRenderer";
 import { preprocessContent } from "../utils/latex";
 import type { AccordionData } from "./Accordion/AccordionContainer";
@@ -28,7 +29,7 @@ export default function ContentBlock({
   if (editing) {
     return (
       <div className="group relative p-sm rounded-xl hover:bg-notion-bg-hover transition-colors">
-        <textarea
+        <MarkdownEditor
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write something..."

@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import MarkdownEditor from "../MarkdownEditor";
 import MarkdownRenderer from "../MarkdownRenderer";
 import { useState } from "react";
 
@@ -95,7 +96,7 @@ export default function AccordionItem({
                     autoFocus
                     className="w-full p-sm border border-notion-border rounded-xl bg-notion-bg text-notion-text-DEFAULT focus:border-notion-text-DEFAULT outline-none"
                   />
-                  <textarea
+                  <MarkdownEditor
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                     placeholder="Answer (Markdown & LaTeX supported)"

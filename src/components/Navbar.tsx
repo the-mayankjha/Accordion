@@ -46,7 +46,7 @@ export default function Navbar({
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
           </div>
-          <span className="font-medium hidden sm:inline">Flashcodes</span>
+          <span className="font-medium hidden sm:inline">nFKs</span>
         </div>
 
         <span className="text-notion-text-secondary hidden sm:inline">/</span>
