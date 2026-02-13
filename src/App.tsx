@@ -3,6 +3,7 @@ import AccordionRenderer from './components/AccordionRenderer'
 import type { AccordionData } from './types'
 import FloatingAddMenu from './components/FloatingAddMenu'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
   const [shortcutsEnabled, setShortcutsEnabled] = useState(true);
@@ -130,11 +131,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-notion-bg text-notion-text-DEFAULT transition-colors duration-300">
+    <div className="min-h-screen bg-notion-bg text-notion-text-DEFAULT transition-colors duration-300 flex flex-col">
       <Navbar shortcutsEnabled={shortcutsEnabled} setShortcutsEnabled={setShortcutsEnabled} />
       
-      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12 space-y-xl">
-      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12 space-y-xl">
+      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12 space-y-xl flex-grow w-full">
         <AccordionRenderer
           accordions={accordions}
           canEdit={true}
@@ -142,7 +142,9 @@ function App() {
           onDelete={handleDelete}
         />
       </div>
-      </div>
+
+      <Footer />
+
       <FloatingAddMenu
         onAddQuestion={handleCreate}
         onAddMarkdown={handleAddMarkdown}
