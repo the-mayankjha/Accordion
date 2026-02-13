@@ -1,7 +1,5 @@
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+import MarkdownRenderer from "./MarkdownRenderer";
 import { preprocessContent } from "../utils/latex";
 import type { AccordionData } from "./Accordion/AccordionContainer";
 import Mermaid from "./Mermaid";
@@ -90,26 +88,8 @@ export default function ContentBlock({
   // Markdown View (Text)
   return (
     <div className="group relative p-sm rounded-xl hover:bg-notion-bg-hover transition-colors">
-      <div className="prose dark:prose-invert max-w-none text-notion-text-DEFAULT">
-        <ReactMarkdown
-          remarkPlugins={[remarkMath]}
-          rehypePlugins={[[rehypeKatex, { trust: true, strict: false }]]}
-          components={{
-            code({ node, inline, className, children, ...props }: any) {
-              const match = /language-(\w+)/.exec(className || "");
-              if (!inline && match && match[1] === "mermaid") {
-                return <Mermaid chart={String(children).replace(/\n$/, "")} />;
-              }
-              return (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        >
-          {preprocessContent(data.answer || 'Empty Note')}
-        </ReactMarkdown>
+      <div className="text-notion-text-DEFAULT">
+        <MarkdownRenderer>{data.answer || 'Empty Note'}</MarkdownRenderer>
       </div>
 
       {canEdit && (

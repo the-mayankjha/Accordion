@@ -1,11 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import Mermaid from "../Mermaid";
-import ReactMarkdown from "react-markdown";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+import MarkdownRenderer from "../MarkdownRenderer";
 import { useState } from "react";
-
-import { preprocessContent } from "../../utils/latex";
 
 interface Props {
   index: number;
@@ -122,26 +117,8 @@ export default function AccordionItem({
                   </div>
                 </div>
               ) : (
-                <div className="prose dark:prose-invert max-w-none text-notion-text-DEFAULT">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkMath]}
-                    rehypePlugins={[[rehypeKatex, { trust: true, strict: false }]]}
-                    components={{
-                      code({ node, inline, className, children, ...props }: any) {
-                        const match = /language-(\w+)/.exec(className || "");
-                        if (!inline && match && match[1] === "mermaid") {
-                          return <Mermaid chart={String(children).replace(/\n$/, "")} />;
-                        }
-                        return (
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        );
-                      },
-                    }}
-                  >
-                    {preprocessContent(answer)}
-                  </ReactMarkdown>
+                <div className="text-notion-text-DEFAULT">
+                  <MarkdownRenderer>{answer}</MarkdownRenderer>
                 </div>
               )}
 
