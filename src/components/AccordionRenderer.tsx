@@ -17,7 +17,19 @@ export default function AccordionRenderer({
   onUpdate,
   onDelete,
 }: Props) {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  const toggleItem = (id: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   return (
     <div className="space-y-lg">
@@ -40,10 +52,8 @@ export default function AccordionRenderer({
               key={item.id}
               index={index}
               data={item}
-              expanded={expandedId === item.id}
-              onToggle={() =>
-                setExpandedId(expandedId === item.id ? null : item.id)
-              }
+              expanded={expandedIds.has(item.id)}
+              onToggle={() => toggleItem(item.id)}
               canEdit={canEdit}
               onUpdate={onUpdate}
               onDelete={onDelete}
