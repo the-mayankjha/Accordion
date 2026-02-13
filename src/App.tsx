@@ -8,53 +8,70 @@ function App() {
   const [shortcutsEnabled, setShortcutsEnabled] = useState(true);
   const [accordions, setAccordions] = useState<AccordionData[]>([
     {
-      id: 'problem-statement',
+      id: 'what-is-firmware',
       type: 'accordion',
-      question: '🧠 First: Nature of Our Problem',
-      answer: 'We are dealing with **SSD SMART telemetry**, multivariate data, time-evolving degradation, and failure prediction.\n\nThis is a:\n\n> Multivariate Time-Series Reliability Prediction Problem\n\n**Data Collection:**\nEach drive has metrics like:\n- `timestamp`\n- `power_on_hours`\n- `program_erase_cycles`\n- `bad_block_count`\n\nSince we lack millions of labeled failure sequences, we must balance technical correctness with hackathon feasibility.'
+      question: '🧠 1️⃣ What is Firmware?',
+      answer: '**Firmware** is low-level software embedded inside hardware devices.\n\nIn SSDs, firmware:\n*   Runs on the SSD controller (a small processor inside the drive)\n*   Manages how data is written, read, erased\n*   Handles NAND memory operations\n*   Controls error correction and wear management\n\nIt is **NOT** Windows/macOS software.\nIt runs inside the SSD itself.'
     },
     {
-      id: 'latex-delimiters',
-      type: 'accordion',
-      question: 'LaTeX Delimiters & Images',
-      answer: 'Display Math using `\\[ ... \\]`: \\[ x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a} \\]\n\nInline Math using `\\( ... \\)`: The value is \\( \\pi \\approx 3.14 \\).\n\nImage Test:\n![Placeholder Image](https://placehold.co/600x400)'
-    },
-
-    {
-      id: 'pipeline-diagram',
+      id: 'firmware-architecture',
       type: 'diagram',
-      question: '📊 Full Pipeline Overview',
-      answer: '```mermaid\ngraph TD\n    A["SMART Logs<br>(Time Series)"] --> B["Feature Engineering"]\n    B -->|Rolling Mean, Growth Rate| C["Feature Matrix"]\n    C --> D["RUL Model<br>(Regression)"]\n    C --> E["Health Classifier"]\n    C --> F["Anomaly Detector"]\n    D & E & F --> G["Health Score Engine"]\n    G --> H["Recommendation Engine"]\n    H --> I["Dashboard"]\n```'
+      question: '🧩 2️⃣ How SSD Firmware Works (Architecture)',
+      answer: '```mermaid\ngraph TD\n    Host["💻 Host (Laptop / Server)"] --> Controller["⚙️ SSD Controller (Firmware runs here)"]\n    Controller --> FTL["🗺️ Flash Translation Layer (FTL)"]\n    FTL --> NAND["💾 NAND Flash Memory"]\n```'
     },
     {
-      id: 'markdown-verification',
-      type: 'markdown',
-      question: '',
-      answer: '### Markdown Rendering Verification\n\n- **Display Math**: \\[ E = mc^2 \\]\n- **Inline Math**: \\( e^{i\\pi} + 1 = 0 \\)\n\n![Test Image](https://placehold.co/400x200?text=Markdown+Image)'
-    },
-    {
-      id: 'feature-engineering',
+      id: 'firmware-functions',
       type: 'accordion',
-      question: '🔹 Step 2: Feature Engineering',
-      answer: 'Instead of raw sequences, we compute statistical features. Tree-based models work extremely well with these.\n\n**Key Formulas:**\n\nRolling Average:\n$$ \\mu_t = \\frac{1}{N} \\sum_{i=0}^{N-1} x_{t-i} $$\n\nGrowth Rate:\n$$ \\Delta = \\frac{x_t - x_{t-1}}{\\Delta t} $$'
+      question: '🔹 What Firmware Does (Internals)',
+      answer: '### 1️⃣ Flash Translation Layer (FTL)\nMaps logical addresses → physical NAND blocks.\n*   NAND cannot overwrite directly.\n*   Must erase before writing.\n\n### 2️⃣ Wear Leveling\nEnsures writes are distributed evenly so no block wears out too early.\n\n### 3️⃣ Garbage Collection\nCleans invalid data pages to free up space.\n\n### 4️⃣ Error Correction (ECC)\nCorrects bit errors from NAND degradation.\n\n### 5️⃣ SMART Monitoring\nTracks health metrics like **Bad block count**, **P/E cycles**, and **Temperature**.\n\n> ⚠️ **Limitation**: Current firmware uses mostly **static threshold-based logic** (e.g., `if bad_block_count > 100 then alert`).'
     },
     {
-      id: 'core-modeling',
+      id: 'limitations',
+      type: 'accordion',
+      question: '⚠️ 3️⃣ Why Current Firmware Monitoring is Limited',
+      answer: 'Firmware today:\n*   Uses **fixed thresholds**\n*   Does not predict trends\n*   Cannot correlate multiple metrics intelligently\n*   Does not estimate Remaining Useful Life (RUL)\n\n**Example:**\nA drive might show:\n1.  Slight temperature instability\n2.  Gradual error rate increase\n3.  Rising write amplification\n\n**Individually fine. Together → early degradation pattern.**\n\nCurrent firmware doesn’t detect this multi-factor relationship.'
+    },
+    {
+      id: 'ai-solution',
+      type: 'accordion',
+      question: '🚀 4️⃣ What Our AI Solution Does Differently',
+      answer: 'Instead of **Rule-based threshold alerts**, we implement **Pattern-based predictive intelligence**.\n\nWe analyze:\n*   Trend over time\n*   Metric correlations\n*   Degradation slope\n*   Abnormal deviations\n\nOur system predicts:\n*   **Remaining Useful Life (RUL)**\n*   **Failure probability**\n*   **Risk score**\n\nThis is true **Predictive Maintenance**.'
+    },
+    {
+      id: 'communication',
+      type: 'accordion',
+      question: '🧠 5️⃣ How Firmware Communicates with AI',
+      answer: '### 🏗 OPTION A: Enterprise Monitoring Layer (Most Practical)\n\n1.  **Firmware** collects SMART telemetry and exports logs.\n2.  **Enterprise Storage Server** aggregates these logs.\n3.  **Our AI Engine** processes the logs to generate Prediction & Health Scoring.\n4.  **Dashboard** displays predictive alerts to the admin.\n\n> This requires **NO firmware modification** and is realistic for data centers.\n\n### 🏗 OPTION B: AI-Assisted Firmware Optimization (Advanced)\n\nFuture possibility: Firmware runs a lightweight ML model onboard to adjust wear leveling dynamically based on predicted degradation.'
+    },
+    {
+      id: 'ml-pipeline',
+      type: 'diagram',
+      question: '📊 Complete ML Pipeline',
+      answer: '```mermaid\ngraph TD\n    A["SMART Logs (Time Series)"] --> B["Feature Engineering<br>(Rolling Mean, Slope, Volatility)"]\n    B --> C["Feature Matrix"]\n    C --> D["RUL Model<br>(XGBoost/RF)"]\n    C --> E["Health Classifier<br>(Random Forest)"]\n    C --> F["Anomaly Detector<br>(Isolation Forest)"]\n    D & E & F --> G["Health Score Engine"]\n    G --> H["Recommendation Engine"]\n    H --> I["Dashboard"]\n```'
+    },
+    {
+      id: 'model-strategy',
       type: 'accordion',
       question: '🎯 Core Modeling Strategy',
-      answer: 'We use **3 ML modules**:\n\n**1️⃣ Remaining Useful Life (RUL)**\n- **Goal**: Predict days until failure.\n- **Model**: Random Forest Regressor / XGBoost.\n- **Why**: Handles nonlinear relationships, robust to small data, interpretable.\n\n**2️⃣ Health Classification**\n- **Goal**: Classify as Healthy, Degrading, or Critical.\n- **Model**: Random Forest Classifier.\n\n**3️⃣ Anomaly Detection**\n- **Goal**: Detect abnormal deviation.\n- **Model**: Isolation Forest (Unsupervised).'
+      answer: '### 1️⃣ Remaining Useful Life (RUL)\n*   **Goal**: Predict days until failure.\n*   **Model**: **XGBoost** or **Random Forest Regressor**.\n*   **Why**: Handles nonlinear relationships, works with small data, interpretable.\n\n### 2️⃣ Health Classification\n*   **Goal**: Classify as Healthy, Degrading, or Critical.\n*   **Model**: **Random Forest Classifier**.\n\n### 3️⃣ Anomaly Detection\n*   **Goal**: Detect abnormal deviation.\n*   **Model**: **Isolation Forest** (Unsupervised).\n\n### 🔥 Why NOT LSTM?\nLSTM is great for deep sequences but requires massive datasets and is hard to interpret. For this hackathon, **Feature Engineering + Tree Ensembles** offers better stability, training speed, and explainability for firmware engineers.'
     },
     {
-      id: 'lstm-analysis',
+      id: 'hackathon-scope',
       type: 'accordion',
-      question: '🔥 Why NOT LSTM for Hackathon?',
-      answer: '**If we had:** Massive failure datasets and weeks to tune, LSTM would be great for deep sequence modeling.\n\n**But for a Hackathon:**\n1.  **Risk**: Overfitting on small data.\n2.  **Complexity**: Harder to train/validate quickly.\n3.  **Explainability**: "Black box" nature is harder to justify to firmware engineers.\n\n**Our Strategy:**\n> Feature Engineering + Ensemble Tree Models > Poorly trained LSTM.\n\nWe mention LSTM as a future "Advanced Extension" for large-scale deployment.'
+      question: '🎯 For Hackathon — What We Are Building',
+      answer: 'We are building:\n\n> **An AI engine that analyzes SMART telemetry exported by SSD firmware and provides predictive failure intelligence to enterprise management systems.**\n\n### 🏆 Value for SanDisk\n*   Moves from **Reactive** to **Predictive**.\n*   Offers AI-enhanced enterprise SSD solutions.\n*   Reduces unexpected failures.\n*   Markets "AI-powered reliability".'
     },
     {
-      id: 'final-selection',
+      id: 'technical-summary',
       type: 'markdown',
-      question: '🎯 Final Model Selection',
-      answer: '| Task | Model | Reason |\n| :--- | :--- | :--- |\n| **RUL Prediction** | XGBoost / Random Forest | Nonlinear + Stable |\n| **Health Class** | Random Forest | Interpretable |\n| **Anomaly** | Isolation Forest | Unsupervised |'
+      question: '📊 Technical Difference Summary',
+      answer: '### 📊 Technical Difference Summary\n\n| Firmware Today | Our AI System |\n| :--- | :--- |\n| Rule-based | **ML-based** |\n| Static thresholds | **Adaptive prediction** |\n| Local detection | **Global analytics** |\n| Binary alerts | **Continuous health score** |\n| No RUL | **Remaining Life Estimation** |'
+    },
+    {
+      id: 'final-pitch',
+      type: 'accordion',
+      question: '💎 FlashSentinel AI: The Pitch',
+      answer: '### 🥇 Name: FlashSentinel AI\n\n> "FlashSentinel AI is a predictive health intelligence engine for NAND-based SSDs that estimates remaining useful life and enables proactive failure prevention."\n\n**Simple Explanation:**\n*   **Firmware** = Internal SSD manager (collects raw telemetry).\n*   **FlashSentinel AI** = Intelligent health prediction brain (turns data into insights).'
     }
   ])
 
