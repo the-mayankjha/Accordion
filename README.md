@@ -2,7 +2,8 @@
 
 A React-based accordion component reimagined as a dynamic note-taking tool. Inspired by Notion, it features a clean UI, mixed content types, and smooth animations.
 
-![App Screenshot](file:///Users/mayankjha/.gemini/antigravity/brain/7f1f5dc4-407f-4387-8efa-90197bccac81/final_result_1771014726873.png)
+<img width="1710" height="951" alt="image" src="https://github.com/user-attachments/assets/297d6118-777b-467b-b83f-afcae66925ba" />
+
 
 ## Features
 
