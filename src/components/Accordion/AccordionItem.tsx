@@ -41,9 +41,8 @@ export default function AccordionItem({
   };
 
   return (
-    <motion.div
-      layout
-      className={`rounded-xl border transition-all ${
+    <div
+      className={`rounded-xl border transition-colors duration-300 ${
         expanded
           ? "border-notion-text-secondary bg-notion-bg-secondary"
           : "border-notion-border bg-notion-bg hover:bg-notion-bg-hover"
@@ -81,74 +80,77 @@ export default function AccordionItem({
         </motion.div>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {expanded && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="px-lg pb-lg"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="overflow-hidden"
           >
-            {editing ? (
-              <div className="space-y-sm">
-                <input
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="Question"
-                  autoFocus
-                  className="w-full p-sm border border-notion-border rounded-xl bg-notion-bg text-notion-text-DEFAULT focus:border-notion-text-DEFAULT outline-none"
-                />
-                <textarea
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                  placeholder="Answer (Markdown & LaTeX supported)"
-                  className="w-full p-sm border border-notion-border rounded-xl min-h-[120px] bg-notion-bg text-notion-text-DEFAULT focus:border-notion-text-DEFAULT outline-none"
-                />
-                <div className="flex gap-sm">
-                  <button
-                    onClick={handleSave}
-                    className="px-lg py-xs bg-black text-white dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity shadow-sm"
+            <div className="px-lg pb-lg">
+              {editing ? (
+                <div className="space-y-sm">
+                  <input
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    placeholder="Question"
+                    autoFocus
+                    className="w-full p-sm border border-notion-border rounded-xl bg-notion-bg text-notion-text-DEFAULT focus:border-notion-text-DEFAULT outline-none"
+                  />
+                  <textarea
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    placeholder="Answer (Markdown & LaTeX supported)"
+                    className="w-full p-sm border border-notion-border rounded-xl min-h-[120px] bg-notion-bg text-notion-text-DEFAULT focus:border-notion-text-DEFAULT outline-none"
+                  />
+                  <div className="flex gap-sm">
+                    <button
+                      onClick={handleSave}
+                      className="px-lg py-xs bg-black text-white dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity shadow-sm"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditing(false)}
+                      className="px-lg py-xs bg-transparent text-notion-text-DEFAULT rounded-full border border-notion-border hover:bg-notion-bg-hover transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="prose dark:prose-invert max-w-none text-notion-text-DEFAULT">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkMath]}
+                    rehypePlugins={[[rehypeKatex, { trust: true, strict: false }]]}
                   >
-                    Save
+                    {preprocessLaTeX(answer)}
+                  </ReactMarkdown>
+                </div>
+              )}
+
+              {canEdit && !editing && (
+                <div className="mt-md flex gap-md">
+                  <button
+                    onClick={() => setEditing(true)}
+                    className="text-sm text-notion-text-secondary hover:text-notion-text-DEFAULT"
+                  >
+                    Edit
                   </button>
                   <button
-                    onClick={() => setEditing(false)}
-                    className="px-lg py-xs bg-transparent text-notion-text-DEFAULT rounded-full border border-notion-border hover:bg-notion-bg-hover transition-colors"
+                    onClick={() => onDelete(data.id)}
+                    className="text-sm text-red-500 hover:text-red-600"
                   >
-                    Cancel
+                    Delete
                   </button>
                 </div>
-              </div>
-            ) : (
-              <div className="prose dark:prose-invert max-w-none text-notion-text-DEFAULT">
-                <ReactMarkdown
-                  remarkPlugins={[remarkMath]}
-                  rehypePlugins={[[rehypeKatex, { trust: true, strict: false }]]}
-                >
-                  {preprocessLaTeX(answer)}
-                </ReactMarkdown>
-              </div>
-            )}
-
-            {canEdit && !editing && (
-              <div className="mt-md flex gap-md">
-                <button
-                  onClick={() => setEditing(true)}
-                  className="text-sm text-notion-text-secondary hover:text-notion-text-DEFAULT"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => onDelete(data.id)}
-                  className="text-sm text-red-500 hover:text-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
