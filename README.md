@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# Accordion - Modern Interactive Note-Taking
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based accordion component reimagined as a dynamic note-taking tool. Inspired by Notion, it features a clean UI, mixed content types, and smooth animations.
 
-Currently, two official plugins are available:
+![App Screenshot](file:///Users/mayankjha/.gemini/antigravity/brain/7f1f5dc4-407f-4387-8efa-90197bccac81/final_result_1771014726873.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### 1. Mixed Content Types
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Questions**: Standard collapsible accordion items for Q&A.
+- **Diagrams**: Mermaid.js diagram support with live rendering.
+- **Markdown**: Rich text notes with full Markdown support.
 
-## Expanding the ESLint configuration
+### 2. Notion-Style UX
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Clean Interface**: Minimalist design with no clutter.
+- **Distraction-Free**: Markdown and Diagram blocks are borderless and transparent.
+- **Smart Editing**: Click to edit, click outside to save. New items auto-focus.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 3. Quick Actions
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Floating Action Button (FAB)**: Animated speed dial for verifying content.
+- **Global Shortcuts**:
+  - `1` → Add Question
+  - `2` → Add Diagram
+  - `3` → Add Markdown Note
+- **Settings**: Toggle shortcuts on/off from the header.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 4. Advanced Rendering
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **LaTeX Math**: Built-in support for block equations (`$$...$$`) and inline math, with auto-detection for `align` environments.
+- **Mermaid Diagrams**: Auto-renders flowcharts, sequence diagrams, and more.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 5. Theming
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Dark Mode**: Fully responsive dark mode with high-contrast text.
+- **Aesthetics**: "Soft" UI with rounded corners (pill-shaped buttons) and smooth framer-motion animations.
+
+## Tech Stack
+
+- **Framework**: React + Vite
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Rendering**: react-markdown, remark-math, rehype-katex, mermaid
+
+## getting Started
+
+1.  Clone the repository.
+2.  Install dependencies: `npm install`
+3.  Run development server: `npm run dev`
