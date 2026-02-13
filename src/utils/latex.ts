@@ -14,7 +14,13 @@ export const preprocessContent = (content: string): string => {
     return codeBlock.replace(/```$/, `\n%%caption: ${caption}\n\`\`\``);
   });
 
-  // 2. Handle LaTeX (existing logic)
+  // 2. Handle LaTeX (existing logic + new delimiters)
+  // Replace \[ ... \] with $$ ... $$
+  processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (_, tex) => `\n$$\n${tex.trim()}\n$$\n`);
+  
+  // Replace \( ... \) with $ ... $
+  processed = processed.replace(/\\\(([\s\S]*?)\\\)/g, (_, tex) => `$${tex.trim()}$`);
+
   const blockRegex = /\$\$([\s\S]*?)\$\$/g;
   const inlineRegex = /\$([^$]+)\$/g;
 

@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
+import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import Mermaid from "./Mermaid";
 import { preprocessContent } from "../utils/latex";
@@ -15,7 +16,7 @@ export default function MarkdownRenderer({ children, className = "" }: Props) {
   return (
     <div className={`markdown-renderer text-notion-text-DEFAULT ${className}`}>
       <ReactMarkdown
-        remarkPlugins={[remarkMath]}
+        remarkPlugins={[remarkMath, remarkGfm]}
         rehypePlugins={[[rehypeKatex, { trust: true, strict: false }]]}
         components={{
           // Headings

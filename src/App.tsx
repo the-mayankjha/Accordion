@@ -14,6 +14,12 @@ function App() {
       answer: 'We are dealing with **SSD SMART telemetry**, multivariate data, time-evolving degradation, and failure prediction.\n\nThis is a:\n\n> Multivariate Time-Series Reliability Prediction Problem\n\n**Data Collection:**\nEach drive has metrics like:\n- `timestamp`\n- `power_on_hours`\n- `program_erase_cycles`\n- `bad_block_count`\n\nSince we lack millions of labeled failure sequences, we must balance technical correctness with hackathon feasibility.'
     },
     {
+      id: 'latex-delimiters',
+      type: 'accordion',
+      question: 'LaTeX Delimiters & Images',
+      answer: 'Display Math using `\\[ ... \\]`: \\[ x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a} \\]\n\nInline Math using `\\( ... \\)`: The value is \\( \\pi \\approx 3.14 \\).\n\nImage Test:\n![Placeholder Image](https://placehold.co/600x400)'
+    },
+    {
       id: 'pipeline-diagram',
       type: 'diagram',
       question: '📊 Full Pipeline Overview',
