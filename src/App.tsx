@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AccordionContainer, { type AccordionData } from './components/Accordion/AccordionContainer'
 import FloatingAddMenu from './components/FloatingAddMenu'
+import Navbar from './components/Navbar'
 
 function App() {
+  const [shortcutsEnabled, setShortcutsEnabled] = useState(true);
   const [accordions, setAccordions] = useState<AccordionData[]>([
     {
       id: '1',
@@ -20,19 +22,49 @@ function App() {
 
   const handleCreate = () => {
     const newId = String(Date.now());
-    setAccordions([...accordions, { id: newId, type: 'accordion', question: '', answer: '' }]);
+    setAccordions((prev) => [...prev, { id: newId, type: 'accordion', question: '', answer: '' }]);
   };
 
   const handleAddDiagram = () => {
     const newId = String(Date.now());
     const template = "```mermaid\ngraph TD;\n    A-->B;\n    A-->C;\n    B-->D;\n    C-->D;\n```";
-    setAccordions([...accordions, { id: newId, type: 'diagram', question: '', answer: template }]);
+    setAccordions((prev) => [...prev, { id: newId, type: 'diagram', question: '', answer: template }]);
   };
 
   const handleAddMarkdown = () => {
      const newId = String(Date.now());
-    setAccordions([...accordions, { id: newId, type: 'markdown', question: '', answer: '' }]);
+    setAccordions((prev) => [...prev, { id: newId, type: 'markdown', question: '', answer: '' }]);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!shortcutsEnabled) return;
+      
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
+      switch (e.key) {
+        case "1":
+          handleCreate();
+          break;
+        case "2":
+          handleAddDiagram();
+          break;
+        case "3":
+          handleAddMarkdown();
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [shortcutsEnabled]);
 
   const handleUpdate = (id: string, data: Partial<AccordionData>) => {
     setAccordions(accordions.map(acc => acc.id === id ? { ...acc, ...data } : acc))
@@ -43,17 +75,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-notion-bg p-section text-notion-text-DEFAULT transition-colors duration-300">
-      <div className="max-w-3xl mx-auto space-y-xl">
-        <header className="text-center space-y-md">
-          <h1 className="text-4xl font-bold text-notion-text-DEFAULT tracking-tight">
-            Knowledge Base
-          </h1>
-          <p className="text-notion-text-secondary text-lg">
-            Interactive accordion system with Markdown & LaTeX support
-          </p>
-        </header>
-
+    <div className="min-h-screen bg-notion-bg text-notion-text-DEFAULT transition-colors duration-300">
+      <Navbar shortcutsEnabled={shortcutsEnabled} setShortcutsEnabled={setShortcutsEnabled} />
+      
+      <div className="max-w-3xl mx-auto px-4 pt-20 pb-12 space-y-xl">
         <AccordionContainer
           accordions={accordions}
           canEdit={true}
