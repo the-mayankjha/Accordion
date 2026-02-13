@@ -19,11 +19,18 @@ function App() {
       question: 'LaTeX Delimiters & Images',
       answer: 'Display Math using `\\[ ... \\]`: \\[ x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a} \\]\n\nInline Math using `\\( ... \\)`: The value is \\( \\pi \\approx 3.14 \\).\n\nImage Test:\n![Placeholder Image](https://placehold.co/600x400)'
     },
+
     {
       id: 'pipeline-diagram',
       type: 'diagram',
       question: '📊 Full Pipeline Overview',
       answer: '```mermaid\ngraph TD\n    A["SMART Logs<br>(Time Series)"] --> B["Feature Engineering"]\n    B -->|Rolling Mean, Growth Rate| C["Feature Matrix"]\n    C --> D["RUL Model<br>(Regression)"]\n    C --> E["Health Classifier"]\n    C --> F["Anomaly Detector"]\n    D & E & F --> G["Health Score Engine"]\n    G --> H["Recommendation Engine"]\n    H --> I["Dashboard"]\n```'
+    },
+    {
+      id: 'markdown-verification',
+      type: 'markdown',
+      question: '',
+      answer: '### Markdown Rendering Verification\n\n- **Display Math**: \\[ E = mc^2 \\]\n- **Inline Math**: \\( e^{i\\pi} + 1 = 0 \\)\n\n![Test Image](https://placehold.co/400x200?text=Markdown+Image)'
     },
     {
       id: 'feature-engineering',
