@@ -73,26 +73,54 @@ const NOTION_DARK = {
 
 const DARK_THEME_CSS = `
   /* Force black text for bright colored nodes in dark mode */
-  .node rect[style*="fill: #ffff"] ~ .label,
-  .node rect[style*="fill: #FFFF"] ~ .label,
-  .node rect[style*="fill: #fff"] ~ .label,
-  .node rect[style*="fill: white"] ~ .label,
-  .node rect[style*="fill: yellow"] ~ .label,
-  .node rect[style*="fill: orange"] ~ .label,
-  .node polygon[style*="fill: #ffff"] ~ .label,
-  .node polygon[style*="fill: #FFFF"] ~ .label,
-  .node polygon[style*="fill: #fff"] ~ .label,
-  .node polygon[style*="fill: white"] ~ .label,
-  .node polygon[style*="fill: yellow"] ~ .label,
-  .node polygon[style*="fill: orange"] ~ .label {
+  /* Hex Colors */
+  .node rect[style*="fill: #ffff" i] ~ .label,
+  .node rect[style*="fill: #fff" i] ~ .label,
+  .node rect[style*="fill: white" i] ~ .label,
+  .node rect[style*="fill: yellow" i] ~ .label,
+  .node rect[style*="fill: orange" i] ~ .label,
+  .node polygon[style*="fill: #ffff" i] ~ .label,
+  .node polygon[style*="fill: #fff" i] ~ .label,
+  .node polygon[style*="fill: white" i] ~ .label,
+  .node polygon[style*="fill: yellow" i] ~ .label,
+  .node polygon[style*="fill: orange" i] ~ .label,
+  /* RGB/RGBA Colors (Yellow, White, Orange-ish) */
+  .node rect[style*="rgb(255, 255" i] ~ .label,
+  .node rect[style*="rgb(255, 165" i] ~ .label,
+  .node polygon[style*="rgb(255, 255" i] ~ .label,
+  .node polygon[style*="rgb(255, 165" i] ~ .label {
     fill: #000000 !important;
     color: #000000 !important;
   }
-  .node rect[style*="fill: #ffff"] ~ .label div,
-  .node polygon[style*="fill: #ffff"] ~ .label div,
-  .node rect[style*="fill: yellow"] ~ .label div,
-  .node polygon[style*="fill: yellow"] ~ .label div {
+
+  /* Target text inside foreignObject (HTML labels) */
+  .node rect[style*="fill: #ffff" i] ~ .label div,
+  .node rect[style*="fill: #fff" i] ~ .label div,
+  .node rect[style*="fill: white" i] ~ .label div,
+  .node rect[style*="fill: yellow" i] ~ .label div,
+  .node rect[style*="fill: orange" i] ~ .label div,
+  .node polygon[style*="fill: #ffff" i] ~ .label div,
+  .node polygon[style*="fill: #fff" i] ~ .label div,
+  .node polygon[style*="fill: white" i] ~ .label div,
+  .node polygon[style*="fill: yellow" i] ~ .label div,
+  .node polygon[style*="fill: orange" i] ~ .label div,
+  .node rect[style*="rgb(255, 255" i] ~ .label div,
+  .node rect[style*="rgb(255, 165" i] ~ .label div,
+  .node polygon[style*="rgb(255, 255" i] ~ .label div,
+  .node polygon[style*="rgb(255, 165" i] ~ .label div {
     color: #000000 !important;
+  }
+
+  /* Target SVG text elements directly (nodeLabel) */
+  .node rect[style*="fill: #ffff" i] ~ .nodeLabel,
+  .node rect[style*="fill: yellow" i] ~ .nodeLabel,
+  .node rect[style*="fill: orange" i] ~ .nodeLabel,
+  .node rect[style*="rgb(255, 255" i] ~ .nodeLabel,
+  .node polygon[style*="fill: #ffff" i] ~ .nodeLabel,
+  .node polygon[style*="fill: yellow" i] ~ .nodeLabel,
+  .node polygon[style*="fill: orange" i] ~ .nodeLabel,
+  .node polygon[style*="rgb(255, 255" i] ~ .nodeLabel {
+     fill: #000000 !important;
   }
 `;
 
