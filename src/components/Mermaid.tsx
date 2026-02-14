@@ -71,6 +71,31 @@ const NOTION_DARK = {
   mainBkg: '#202020', // Notion Secondary BG
 };
 
+const DARK_THEME_CSS = `
+  /* Force black text for bright colored nodes in dark mode */
+  .node rect[style*="fill: #ffff"] ~ .label,
+  .node rect[style*="fill: #FFFF"] ~ .label,
+  .node rect[style*="fill: #fff"] ~ .label,
+  .node rect[style*="fill: white"] ~ .label,
+  .node rect[style*="fill: yellow"] ~ .label,
+  .node rect[style*="fill: orange"] ~ .label,
+  .node polygon[style*="fill: #ffff"] ~ .label,
+  .node polygon[style*="fill: #FFFF"] ~ .label,
+  .node polygon[style*="fill: #fff"] ~ .label,
+  .node polygon[style*="fill: white"] ~ .label,
+  .node polygon[style*="fill: yellow"] ~ .label,
+  .node polygon[style*="fill: orange"] ~ .label {
+    fill: #000000 !important;
+    color: #000000 !important;
+  }
+  .node rect[style*="fill: #ffff"] ~ .label div,
+  .node polygon[style*="fill: #ffff"] ~ .label div,
+  .node rect[style*="fill: yellow"] ~ .label div,
+  .node polygon[style*="fill: yellow"] ~ .label div {
+    color: #000000 !important;
+  }
+`;
+
 export default function Mermaid({ chart }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
@@ -99,6 +124,7 @@ export default function Mermaid({ chart }: Props) {
       startOnLoad: false,
       theme: 'base',
       themeVariables: isDark ? NOTION_DARK : NOTION_LIGHT,
+      themeCSS: isDark ? DARK_THEME_CSS : undefined,
       securityLevel: 'loose',
     });
 
