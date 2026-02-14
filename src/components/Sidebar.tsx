@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Topic, Page } from '../types';
+import { useAuth } from "../context/AuthContext";
+import { LogOut } from "lucide-react";
 
 interface SidebarProps {
   topics: Topic[];
@@ -20,6 +22,8 @@ export default function Sidebar({
   onToggle,
   onToggleFavorite
 }: SidebarProps) {
+  const { user, logout } = useAuth();
+
   // Group pages by topic
   const pagesByTopic = topics.reduce((acc, topic) => {
     acc[topic.id] = pages.filter((page) => page.topicId === topic.id);
@@ -192,12 +196,29 @@ export default function Sidebar({
                  <span>New Page</span>
              </div>
              
-             <div className="flex items-center gap-2 px-2 py-1 hover:bg-[#E3E2E0] dark:hover:bg-[#2C2C2C] rounded-md cursor-pointer text-[#37352F] dark:text-[#D4D4D4] mt-1">
-                <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-xs text-white overflow-hidden">
-                  <img src="https://github.com/shadcn.png" alt="User" />
-                </div>
-                <span className="truncate">Mayank Jha</span>
-             </div>
+             {user ? (
+               <div className="group relative">
+                 <div className="flex items-center gap-2 px-2 py-1 hover:bg-[#E3E2E0] dark:hover:bg-[#2C2C2C] rounded-md cursor-pointer text-[#37352F] dark:text-[#D4D4D4] mt-1">
+                    <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-xs text-white overflow-hidden">
+                      {user.user_metadata.avatar_url ? (
+                        <img src={user.user_metadata.avatar_url} alt="User" className="w-full h-full object-cover"/>
+                      ) : (
+                        <span>{user.email?.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <span className="truncate flex-1">{user.user_metadata.full_name || user.email}</span>
+                    <button 
+                      onClick={() => logout()}
+                      className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-opacity"
+                      title="Log Out"
+                    >
+                      <LogOut size={14}/>
+                    </button>
+                 </div>
+               </div>
+             ) : (
+               <div className="px-2 py-1 text-xs text-gray-400">Not signed in</div>
+             )}
            </div>
 
         </div>

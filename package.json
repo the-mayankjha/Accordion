@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "author": "Mayank Jha",
   "type": "module",
-
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -12,9 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.0",
     "katex": "^0.16.28",
+    "lucide-react": "^0.564.0",
     "mermaid": "^11.12.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
+import { LoginModal } from "./LoginModal";
+import { Settings } from "lucide-react";
 
 interface NavbarProps {
   shortcutsEnabled: boolean;
@@ -12,7 +15,9 @@ export default function Navbar({
   setShortcutsEnabled,
   onToggleSidebar,
 }: NavbarProps) {
+  const { user } = useAuth();
   const [showSettings, setShowSettings] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
        const saved = localStorage.getItem('theme');
@@ -33,6 +38,7 @@ export default function Navbar({
   }, [isDarkMode]);
 
   return (
+    <>
     <nav className="fixed top-0 left-0 w-full h-11 flex items-center justify-between px-3 bg-notion-bg border-b border-notion-border z-50 transition-colors duration-300">
       {/* Left Section */}
       <div className="flex items-center gap-2 text-sm text-notion-text-DEFAULT overflow-hidden">
@@ -96,27 +102,36 @@ export default function Navbar({
 
       {/* Right Section */}
       <div className="flex items-center gap-1 shrink-0">
-        <button className="text-sm px-2 py-0.5 hover:bg-notion-bg-hover rounded transition-colors text-notion-text-DEFAULT focus:outline-none active:outline-none">
-          <span className="hidden sm:inline">Share</span>
-          <span className="sm:hidden">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-            </svg>
-          </span>
-        </button>
+        {!user ? (
+          <button 
+            onClick={() => setIsLoginModalOpen(true)}
+            className="text-sm px-3 py-1 bg-notion-text text-notion-bg hover:opacity-90 rounded-md transition-all font-medium"
+          >
+            Login
+          </button>
+        ) : (
+          <button className="text-sm px-2 py-0.5 hover:bg-notion-bg-hover rounded transition-colors text-notion-text-DEFAULT focus:outline-none active:outline-none">
+            <span className="hidden sm:inline">Share</span>
+            <span className="sm:hidden">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </span>
+          </button>
+        )}
         
         <div className="relative">
           <motion.button  
@@ -126,19 +141,7 @@ export default function Navbar({
             animate={{ rotate: showSettings ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
+            <Settings className="w-5 h-5" />
           </motion.button>
 
           <AnimatePresence>
@@ -224,8 +227,20 @@ export default function Navbar({
           </AnimatePresence>
         </div>
 
-        <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-400 to-purple-500 ml-2 shadow-sm border border-white/10"></div>
+        {user && (
+           <div className="w-6 h-6 rounded-full ml-2 shadow-sm border border-white/10 overflow-hidden bg-gray-200">
+             {user.user_metadata.avatar_url ? (
+               <img src={user.user_metadata.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+             ) : (
+               <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 text-[10px] text-white font-bold">
+                  {user.email?.charAt(0).toUpperCase()}
+               </div>
+             )}
+           </div>
+        )}
       </div>
     </nav>
+    <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+    </>
   );
 }
