@@ -20,23 +20,21 @@
     --accent-gold: #D9730D;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      /* Dark Mode */
-      --bg-default: #191919;
-      --bg-secondary: #202020;
-      --bg-hover: #2C2C2C;
-      --bg-active: #373737;
+  .dark {
+    /* Dark Mode */
+    --bg-default: #191919;
+    --bg-secondary: #202020;
+    --bg-hover: #2C2C2C;
+    --bg-active: #373737;
 
-      --text-default: #D4D4D4;
-      --text-secondary: #9B9B9B;
-      --text-disabled: #5A5A5A;
+    --text-default: #D4D4D4;
+    --text-secondary: #9B9B9B;
+    --text-disabled: #5A5A5A;
 
-      --border-default: #2F2F2F;
-      --border-focus: #2EAADC;
+    --border-default: #2F2F2F;
+    --border-focus: #2EAADC;
 
-      --accent-gold: #DFAB01;
-    }
+    --accent-gold: #DFAB01;
   }
 
   body {

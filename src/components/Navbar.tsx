@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface NavbarProps {
@@ -13,6 +13,24 @@ export default function Navbar({
   onToggleSidebar,
 }: NavbarProps) {
   const [showSettings, setShowSettings] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+       const saved = localStorage.getItem('theme');
+       if (saved) return saved === 'dark';
+       return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   return (
     <nav className="fixed top-0 left-0 w-full h-11 flex items-center justify-between px-3 bg-notion-bg border-b border-notion-border z-50 transition-colors duration-300">
@@ -154,6 +172,39 @@ export default function Navbar({
                         <svg
                           className={`w-3 h-3 text-notion-bg transition-opacity ${
                             shortcutsEnabled ? "opacity-100" : "opacity-0"
+                          }`}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label className="flex items-center justify-between px-2 py-1.5 hover:bg-notion-bg-hover rounded cursor-pointer mt-1">
+                    <span className="text-sm text-notion-text-DEFAULT">Dark Mode</span>
+                    <div className="relative flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={isDarkMode}
+                        onChange={(e) => setIsDarkMode(e.target.checked)}
+                        className="sr-only"
+                      />
+                      <div 
+                        className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                          isDarkMode 
+                            ? "bg-notion-text border-notion-text" 
+                            : "bg-transparent border-notion-text-secondary"
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-notion-bg transition-opacity ${
+                            isDarkMode ? "opacity-100" : "opacity-0"
                           }`}
                           viewBox="0 0 24 24"
                           fill="none"
