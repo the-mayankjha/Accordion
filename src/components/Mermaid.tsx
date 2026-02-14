@@ -42,33 +42,33 @@ const NOTION_PASTEL_LIGHT = {
 const NOTION_PASTEL_DARK = {
   fontFamily: 'Inter, sans-serif',
   fontSize: '14px',
-  primaryColor: '#202020', // Notion Dark Node
-  primaryTextColor: '#D4D4D4', // Notion Text
+  primaryColor: '#FFFFFF', // White Node
+  primaryTextColor: '#37352F', // Dark Text
   primaryBorderColor: '#cba6f7', // Pastel Mauve Border
-  lineColor: '#a6adc8', // Pastel Grey-Blue Line
-  secondaryColor: '#191919', // Notion Bg
-  tertiaryColor: '#202020',
+  lineColor: '#b4befe', // Pastel Lavender Line
+  secondaryColor: '#252525', // Dark Cluster
+  tertiaryColor: '#FFFFFF',
   nodeBorder: '#cba6f7', // Pastel Mauve
-  clusterBkg: '#191919', 
+  clusterBkg: '#252525', 
   clusterBorder: '#cba6f7', 
-  defaultLinkColor: '#a6adc8',
-  edgeLabelBackground: '#202020', 
+  defaultLinkColor: '#b4befe', // Pastel Lavender
+  edgeLabelBackground: '#252525', 
   actorBorder: '#cba6f7',
-  actorBkg: '#202020',
-  actorTextColor: '#D4D4D4',
-  signalColor: '#D4D4D4',
-  signalTextColor: '#D4D4D4',
-  labelBoxBkgColor: '#202020',
+  actorBkg: '#FFFFFF',
+  actorTextColor: '#37352F',
+  signalColor: '#37352F',
+  signalTextColor: '#37352F',
+  labelBoxBkgColor: '#FFFFFF',
   labelBoxBorderColor: '#cba6f7',
-  labelTextColor: '#D4D4D4',
-  loopTextColor: '#D4D4D4',
+  labelTextColor: '#37352F',
+  loopTextColor: '#37352F',
   noteBorderColor: '#cba6f7',
-  noteBkgColor: '#202020',
-  noteTextColor: '#D4D4D4',
+  noteBkgColor: '#FFFFFF',
+  noteTextColor: '#37352F',
   activationBorderColor: '#cba6f7',
-  activationBkgColor: '#202020',
-  sequenceNumberColor: '#D4D4D4',
-  mainBkg: '#191919',
+  activationBkgColor: '#FFFFFF',
+  sequenceNumberColor: '#37352F',
+  mainBkg: '#191919', // Dark Canvas
 };
 
 export default function Mermaid({ chart }: Props) {
