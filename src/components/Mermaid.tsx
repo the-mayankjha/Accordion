@@ -19,7 +19,7 @@ const NOTION_LIGHT = {
   clusterBkg: '#F7F7F5', 
   clusterBorder: '#E9E9E7', 
   defaultLinkColor: '#787774',
-  edgeLabelBackground: '#FFFFFF', 
+  edgeLabelBackground: '#FBFBFA', 
   actorBorder: '#E9E9E7',
   actorBkg: '#FFFFFF',
   actorTextColor: '#37352F',
@@ -35,7 +35,7 @@ const NOTION_LIGHT = {
   activationBorderColor: '#37352F',
   activationBkgColor: '#F7F7F5',
   sequenceNumberColor: '#37352F',
-  mainBkg: '#FFFFFF',
+  mainBkg: '#FBFBFA', // Notion Secondary BG
 };
 
 // Notion Dark Theme (Neutral)
