@@ -52,7 +52,7 @@ const NOTION_DARK = {
   clusterBkg: '#252525', 
   clusterBorder: '#5A5A5A', 
   defaultLinkColor: '#9B9B9B',
-  edgeLabelBackground: '#191919', 
+  edgeLabelBackground: '#202020', 
   actorBorder: '#5A5A5A',
   actorBkg: '#2f2f2f',
   actorTextColor: '#FFFFFF',
@@ -68,7 +68,7 @@ const NOTION_DARK = {
   activationBorderColor: '#5A5A5A',
   activationBkgColor: '#2f2f2f',
   sequenceNumberColor: '#FFFFFF',
-  mainBkg: '#191919', // Dark Canvas
+  mainBkg: '#202020', // Notion Secondary BG
 };
 
 export default function Mermaid({ chart }: Props) {
