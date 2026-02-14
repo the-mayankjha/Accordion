@@ -6,16 +6,25 @@ export interface AccordionData {
   question: string;
   answer: string;
 }
+
 export interface Topic {
   id: string;
+  user_id: string;
   title: string;
+  emoji?: string;
+  is_public: boolean;
+  created_at: string;
 }
 
 export interface Page {
   id: string;
-  topicId: string;
+  topic_id?: string;
+  user_id: string;
   title: string;
-  isFavorite?: boolean;
-  lastVisited?: number;
   content: AccordionData[];
+  is_public: boolean;
+  is_encrypted: boolean;
+  isFavorite?: boolean; 
+  created_at: string;
+  updated_at: string;
 }

@@ -5,6 +5,8 @@
   "description": "A modern, collapsible knowledge base for technical documentation.",
 
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
