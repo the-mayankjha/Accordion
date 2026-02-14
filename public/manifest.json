@@ -1,7 +1,9 @@
 {
   "name": "Accordion",
   "short_name": "Accordion",
+  "author": "Mayank Jha",
   "description": "A modern, collapsible knowledge base for technical documentation.",
+
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

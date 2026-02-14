@@ -2,7 +2,9 @@
   "name": "accordion",
   "private": true,
   "version": "0.0.0",
+  "author": "Mayank Jha",
   "type": "module",
+
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
