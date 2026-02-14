@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import mermaid from "mermaid";
 
-mermaid.initialize({
-  startOnLoad: false,
-  theme: "dark",
-  securityLevel: "loose",
-});
-
 interface Props {
   chart: string;
 }
@@ -17,10 +11,19 @@ export default function Mermaid({ chart }: Props) {
   const [caption, setCaption] = useState<string | null>(null);
 
   useEffect(() => {
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      securityLevel: 'loose',
+      fontFamily: 'Inter, sans-serif',
+    });
+
     if (ref.current && chart) {
       const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
       
       let processingChart = chart;
+      // ... rest of the logic remains same
       let extractedCaption = null;
 
       // Extract caption
@@ -34,16 +37,14 @@ export default function Mermaid({ chart }: Props) {
       // Sanitize chart input
       let cleanedChart = processingChart;
       // Robust regex to extract content inside ```mermaid ... ``` or ``` ... ```
-      // Matches start of string, optional whitespace, optional fences, content, optional fences, end of string (ignoring trailing content if it looks like a block)
       const codeBlockMatch = /^\s*```(?:mermaid)?\n?([\s\S]*?)```/.exec(processingChart);
       if (codeBlockMatch) {
         cleanedChart = codeBlockMatch[1];
       } else {
-        // Fallback cleanup if regex doesn't match (e.g. user didn't use fences properly or at all)
         cleanedChart = processingChart
           .replace(/^```mermaid\s*/, "")
           .replace(/^```\s*/, "")
-          .replace(/```[\s\S]*$/, "") // Aggressively remove ending backticks and anything after them (newlines, captions, etc.)
+          .replace(/```[\s\S]*$/, "") 
           .trim();
       }
 

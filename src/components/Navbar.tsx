@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 interface NavbarProps {
   shortcutsEnabled: boolean;
   setShortcutsEnabled: (enabled: boolean) => void;
+  onToggleSidebar: () => void;
 }
 
 export default function Navbar({
   shortcutsEnabled,
   setShortcutsEnabled,
+  onToggleSidebar,
 }: NavbarProps) {
   const [showSettings, setShowSettings] = useState(false);
 
@@ -16,10 +18,13 @@ export default function Navbar({
     <nav className="fixed top-0 left-0 w-full h-11 flex items-center justify-between px-3 bg-notion-bg border-b border-notion-border z-50 transition-colors duration-300">
       {/* Left Section */}
       <div className="flex items-center gap-2 text-sm text-notion-text-DEFAULT overflow-hidden">
-        <button className="p-1 hover:bg-notion-bg-hover rounded-full transition-colors focus:outline-none active:outline-none shrink-0">
+        <button 
+          onClick={onToggleSidebar}
+          className="p-1 hover:bg-notion-bg-hover rounded-full transition-colors focus:outline-none active:outline-none shrink-0"
+        >
           <svg
-            width="18"
-            height="18"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -27,9 +32,8 @@ export default function Navbar({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
           </svg>
         </button>
 
