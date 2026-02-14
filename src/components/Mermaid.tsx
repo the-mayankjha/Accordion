@@ -88,6 +88,9 @@ export default function Mermaid({ chart }: Props) {
     
     observer.observe(document.documentElement, { attributes: true });
     
+    // Sync state immediately in case it changed before observer was ready
+    setIsDark(document.documentElement.classList.contains('dark'));
+    
     return () => observer.disconnect();
   }, []);
 
