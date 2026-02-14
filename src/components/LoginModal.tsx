@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { X, Github, Mail } from 'lucide-react'; // Using Mail as placeholder for Google if needed, or just text
-// Ensure you have these icons or similar. I'll use text for clarity if icons missing.
+import { X, Github } from 'lucide-react';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -15,29 +14,33 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-[#202020] rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-200 dark:border-gray-800">
-        <div className="flex justify-between items-center p-4 border-b border-gray-100 dark:border-gray-800">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Sign In</h2>
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 transition-opacity">
+      <div 
+        className="bg-notion-bg w-full max-w-md rounded-xl shadow-2xl overflow-hidden border border-notion-border transform transition-all"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-notion-border">
+          <h2 className="text-lg font-semibold text-notion-text-DEFAULT">Sign In</h2>
           <button 
             onClick={onClose}
-            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#2f2f2f] transition-colors"
+            className="p-1 rounded hover:bg-notion-bg-hover text-notion-text-secondary hover:text-notion-text-DEFAULT transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            <X className="w-5 h-5" />
           </button>
         </div>
         
+        {/* Content */}
         <div className="p-6 space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Sign in to sync your accordion across devices and collaborate.
+          <p className="text-sm text-notion-text-secondary mb-6 text-center">
+            Log in to sync your accordion across devices and collaborate in real-time.
           </p>
 
           <button
             onClick={() => { loginWithGoogle(); onClose(); }}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 rounded-lg transition-all font-medium dark:bg-[#2f2f2f] dark:border-transparent dark:text-white dark:hover:bg-[#3f3f3f]"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-notion-bg hover:bg-notion-bg-hover text-notion-text-DEFAULT border border-notion-border rounded-lg transition-all font-medium text-sm group"
           >
-            {/* Google Icon SVG */}
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 group-hover:scale-105 transition-transform" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#4285F4"
@@ -60,28 +63,35 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
           <button
             onClick={() => { loginWithGithub(); onClose(); }}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-[#24292e] hover:bg-[#2f363d] text-white rounded-lg transition-all font-medium"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-[#24292e] hover:bg-[#2f363d] text-white rounded-lg transition-all font-medium text-sm group"
           >
-            <Github className="w-5 h-5" />
+            <Github className="w-5 h-5 group-hover:scale-105 transition-transform" />
             Continue with GitHub
           </button>
 
-          <div className="relative my-4">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+              <div className="w-full border-t border-notion-border"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white dark:bg-[#202020] text-gray-500">Or use nFKs</span>
+            <div className="relative flex justify-center text-xs uppercase tracking-wider">
+              <span className="px-3 bg-notion-bg text-notion-text-secondary">Or</span>
             </div>
           </div>
 
           <button
             onClick={() => { loginWithNFKs(); onClose(); }}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all font-medium shadow-lg shadow-indigo-500/20"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all font-medium text-sm shadow-md shadow-indigo-500/20 group"
           >
-            <span className="font-bold">nFKs</span>
-            Log in with nFKs
+            <img src="/nfks_logo.svg" alt="nFKs Logo" className="w-5 h-5 group-hover:scale-105 transition-transform" />
+            Log in with nFKs ID
           </button>
+        </div>
+        
+        {/* Footer info (Optional visual touch) */}
+        <div className="px-6 py-4 bg-notion-bg-hover/30 border-t border-notion-border text-center">
+             <p className="text-xs text-notion-text-secondary">
+               By continuing, you agree to our Terms of Service and Privacy Policy.
+             </p>
         </div>
       </div>
     </div>
